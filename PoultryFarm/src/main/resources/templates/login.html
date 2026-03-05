@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login | Choline Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="login-body">
+
+<div class="login-container">
+
+    <!-- Left Branding Panel -->
+    <div class="login-left">
+        <h1>CHOLINE</h1>
+        <p>Digital Poultry & Agri Trade Platform</p>
+        <p class="sub">Connect. Trade. Grow.</p>
+    </div>
+
+    <!-- Right Login Form -->
+    <div class="login-right">
+
+        <h2>Welcome Back</h2>
+        <p class="login-subtext">Login to access your dashboard</p>
+
+        <form th:action="@{/login}" method="post">
+
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" name="username" required />
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" name="password" required />
+            </div>
+
+            <button class="login-btn" type="submit">Login</button>
+        </form>
+
+        <p class="error" th:if="${param.error}">
+            Invalid username or password
+        </p>
+
+        <p class="msg" th:if="${param.logout}">
+            Successfully logged out
+        </p>
+
+        <p class="register-link">
+            New user? <a th:href="@{/register}">Create account</a>
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>

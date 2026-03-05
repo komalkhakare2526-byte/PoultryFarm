@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard | Choline Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="dashboard-body">
+
+<!-- TOP NAVBAR -->
+<div class="topbar">
+    <div class="logo">CHOLINE Platform</div>
+
+    <div class="topbar-right">
+        <span>Welcome, User</span>
+
+        <form th:action="@{/logout}" method="post">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h3>Navigation</h3>
+
+        <a href="#">Dashboard</a>
+        <a href="#">Marketplace</a>
+        <a href="#">Contract Farming</a>
+        <a href="#">Feed Orders</a>
+        <a href="#">Analytics</a>
+        <a href="#">Profile</a>
+    </div>
+
+    <!-- CONTENT AREA -->
+    <div class="content">
+
+        <h2>Dashboard Overview</h2>
+
+        <div class="card-grid">
+
+            <div class="dash-card">
+                <h3>Total Orders</h3>
+                <p class="value">124</p>
+            </div>
+
+            <div class="dash-card">
+                <h3>Active Contracts</h3>
+                <p class="value">18</p>
+            </div>
+
+            <div class="dash-card">
+                <h3>Feed Inventory</h3>
+                <p class="value">560 Kg</p>
+            </div>
+
+            <div class="dash-card">
+                <h3>Revenue</h3>
+                <p class="value">₹ 2.4L</p>
+            </div>
+
+        </div>
+
+        <div class="card large-card">
+            <h3>Platform Activity</h3>
+            <p>Recent transactions and analytics summary will appear here.</p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

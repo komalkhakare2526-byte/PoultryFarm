@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Products</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #1e3a8a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+        }
+
+        th {
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #eee;
+            transition: 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f3f4f6;
+        }
+
+        .badge {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .in-stock {
+            background-color: #16a34a;
+        }
+
+        .low-stock {
+            background-color: #f59e0b;
+        }
+
+        .out-stock {
+            background-color: #dc2626;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-decoration: none;
+            margin-right: 5px;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .add-btn {
+            background: #1e3a8a;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: gray;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+
+        <div class="top-bar">
+            <h2>📦 My Product Listings</h2>
+            <a th:href="@{/farmer/add-product}" class="add-btn">+ Add Product</a>
+        </div>
+
+        <!-- If no products -->
+        <div th:if="${#lists.isEmpty(products)}" class="empty-state">
+            <h3>No Products Added Yet</h3>
+            <p>Start selling by adding your first poultry product.</p>
+        </div>
+
+        <!-- Product Table -->
+        <table th:if="${!#lists.isEmpty(products)}">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price (₹)</th>
+                    <th>Quantity</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="p : ${products}">
+                    <td th:text="${p.name}"></td>
+                    <td th:text="${p.price}"></td>
+                    <td th:text="${p.quantity}"></td>
+                    <td th:text="${p.location}"></td>
+
+                    <!-- Stock Status -->
+                    <td>
+                        <span th:if="${p.quantity > 20}" 
+                              class="badge in-stock">In Stock</span>
+
+                        <span th:if="${p.quantity <= 20 and p.quantity > 0}" 
+                              class="badge low-stock">Low Stock</span>
+
+                        <span th:if="${p.quantity == 0}" 
+                              class="badge out-stock">Out of Stock</span>
+                    </td>
+
+                    <td>
+                        <a th:href="@{'/farmer/edit-product/' + ${p.id}}" 
+                           class="action-btn edit-btn">Edit</a>
+
+                        <a th:href="@{'/farmer/delete-product/' + ${p.id}}" 
+                           class="action-btn delete-btn"
+                           onclick="return confirm('Are you sure?')">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="back-link">
+            <a th:href="@{/farmer/dashboard}">← Back to Dashboard</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

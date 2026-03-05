@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Orders</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #1e3a8a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #eee;
+            transition: 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f3f4f6;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .pending {
+            background-color: #f59e0b;
+        }
+
+        .accepted {
+            background-color: #16a34a;
+        }
+
+        .rejected {
+            background-color: #dc2626;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: gray;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+
+        <h2>🛒 My Orders</h2>
+
+        <!-- Empty State -->
+        <div th:if="${#lists.isEmpty(orders)}" class="empty-state">
+            <h3>No Orders Yet</h3>
+            <p>You haven’t placed any orders yet.</p>
+        </div>
+
+        <!-- Orders Table -->
+        <table th:if="${!#lists.isEmpty(orders)}">
+            <thead>
+            <tr>
+                <th>Product</th>
+                <th>Farmer</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Order Date</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="o : ${orders}">
+                <td th:text="${o.product.name}"></td>
+                <td th:text="${o.product.farmer.username}"></td>
+                <td th:text="${o.quantity}"></td>
+                <td>₹ <span th:text="${o.product.price}"></span></td>
+                <td>
+                    ₹ <span th:text="${o.quantity * o.product.price}"></span>
+                </td>
+
+                <!-- Status Badge -->
+                <td>
+                    <span th:if="${o.status == 'PENDING'}"
+                          class="badge pending">Pending</span>
+
+                    <span th:if="${o.status == 'ACCEPTED'}"
+                          class="badge accepted">Accepted</span>
+
+                    <span th:if="${o.status == 'REJECTED'}"
+                          class="badge rejected">Rejected</span>
+                </td>
+
+                <td th:text="${#temporals.format(o.createdAt, 'dd MMM yyyy')}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="back-link">
+            <a th:href="@{/buyer/dashboard}">← Back to Dashboard</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

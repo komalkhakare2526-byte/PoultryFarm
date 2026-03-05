@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buyer Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        .welcome {
+            margin-top: 15px;
+            font-size: 18px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            color: #1e3a8a;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .card p {
+            margin-top: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .actions {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .action-btn {
+            background: white;
+            color: #1e3a8a;
+            padding: 20px;
+            text-align: center;
+            border-radius: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #e0e7ff;
+            transform: translateY(-5px);
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+        <h2>🛍 Buyer Dashboard</h2>
+        <div class="logout">
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+    </div>
+
+    <!-- Welcome -->
+    <div class="welcome">
+        Welcome, <strong th:text="${username}">Buyer</strong> 👋
+    </div>
+
+    <!-- Stats -->
+    <div class="stats">
+
+        <div class="card">
+            <h3 th:text="${totalOrders}">0</h3>
+            <p>Total Orders</p>
+        </div>
+
+        <div class="card">
+            <h3 th:text="${pendingOrders}">0</h3>
+            <p>Pending Orders</p>
+        </div>
+
+        <div class="card">
+            <h3 th:text="${acceptedOrders}">0</h3>
+            <p>Accepted Orders</p>
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions">
+
+        <a th:href="@{/buyer/marketplace}" class="action-btn">
+            🛒 Browse Marketplace
+        </a>
+
+        <a th:href="@{/buyer/my-orders}" class="action-btn">
+            📦 My Orders
+        </a>
+
+    </div>
+
+    <div class="footer">
+        Farmer Marketplace System © 2026
+    </div>
+
+</div>
+
+</body>
+</html>
